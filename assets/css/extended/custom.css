@@ -1,0 +1,131 @@
+/* Custom CSS for your blog */
+/* This file extends the PaperMod theme styles */
+
+/* Example: Custom color scheme */
+:root {
+    --primary: #0ea5e9;
+    --secondary: #8b5cf6;
+    --accent: #f59e0b;
+}
+
+/* Example: Custom font */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Example: Custom post header styling */
+.post-header h1 {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Example: Custom code block styling */
+.highlight {
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+    padding: 16px;
+}
+
+/* Example: Custom link hover effects */
+.post-content a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-style: wavy;
+}
+
+/* Example: Custom blockquote styling */
+blockquote {
+    border-left: 4px solid var(--accent);
+    padding-left: 20px;
+    font-style: italic;
+    background: rgba(245, 158, 11, 0.1);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 24px 0;
+}
+
+/* Example: Custom table styling */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: 12px;
+}
+
+table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Example: Custom button/tag styling */
+.post-tags .tags a {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    transition: transform 0.2s;
+}
+
+.post-tags .tags a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Example: Custom animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-content > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Example: Custom responsive breakpoints */
+@media (max-width: 768px) {
+    .post-header h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Example: Dark mode customizations */
+.dark body {
+    background: #0f172a;
+}
+
+.dark .post-content {
+    color: #e2e8f0;
+}
+
+.dark code {
+    background: #1e293b;
+    color: #38bdf8;
+}
+
+/* Example: Custom scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Example: Custom selection color */
+::selection {
+    background: var(--primary);
+    color: white;
+}
+
+/* Add your own custom styles below */
