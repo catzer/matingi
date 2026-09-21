@@ -1,5 +1,5 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
+baseURL = 'https://catzer.github.io/matingi/'
+languageCode = 'en-us'
 title = 'Cloud Architecture & DevOps Blog'
 theme = 'PaperMod'
 paginate = 10
@@ -18,7 +18,7 @@ env = "production"
 title = "Cloud Architecture & DevOps Blog"
 description = "Technical blog documenting cloud architecture, DevOps practices, and SRE projects"
 keywords = ["Cloud Architecture", "DevOps", "SRE", "AWS", "Kubernetes", "CI/CD"]
-author = "Your Name"
+author = "jnziokah@gmail.com"
 DateFormat = "January 2, 2006"
 defaultTheme = "auto"
 disableThemeToggle = false
@@ -56,11 +56,11 @@ Here you'll find practical guides, architecture decisions, and lessons learned f
 
 [[params.socialIcons]]
 name = "github"
-url = "https://github.com/yourusername"
+url = "https://github.com/catzer"
 
 [[params.socialIcons]]
 name = "linkedin"
-url = "https://linkedin.com/in/yourprofile"
+url = "https://www.linkedin.com/in/jeremiahnziokamutungi"
 
 [[params.socialIcons]]
 name = "rss"
@@ -72,7 +72,7 @@ hiddenInList = false
 hiddenInSingle = false
 
 [params.editPost]
-URL = "https://github.com/yourusername/your-blog-repo/tree/main/content"
+URL = "https://github.com/catzer/matingi/tree/main/content"
 Text = "Suggest Changes"
 appendFilePath = true
 
