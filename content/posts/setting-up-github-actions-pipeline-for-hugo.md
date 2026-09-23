@@ -121,6 +121,69 @@ jobs:
 
 ---
 
+## Pipeline Design
+
+Before diving into each section, here is how the entire pipeline is structured and how the pieces connect:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        TRIGGER                                  │
+│                                                                 │
+│   git push to main  ──OR──  Manual trigger (workflow_dispatch)  │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        BUILD JOB                                │
+│                        (ubuntu-latest)                          │
+│                                                                 │
+│  Step 1 ── Install Hugo Extended v0.166.0                       │
+│               │                                                 │
+│               ▼                                                 │
+│  Step 2 ── Install Dart Sass                                    │
+│               │                                                 │
+│               ▼                                                 │
+│  Step 3 ── Checkout code + PaperMod submodule                   │
+│               │                                                 │
+│               ▼                                                 │
+│  Step 4 ── Configure GitHub Pages → outputs base_url            │
+│               │                                                 │
+│               ▼                                                 │
+│  Step 5 ── hugo --minify --baseURL <base_url>                   │
+│               │   generates public/ directory                   │
+│               ▼                                                 │
+│  Step 6 ── Upload public/ as Pages artifact                     │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │
+                          needs: build
+                    (only runs if build passes)
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       DEPLOY JOB                                │
+│                       (ubuntu-latest)                           │
+│                                                                 │
+│  Step 1 ── Download artifact from build job                     │
+│               │                                                 │
+│               ▼                                                 │
+│  Step 2 ── Publish to GitHub Pages CDN                          │
+│               │                                                 │
+│               ▼                                                 │
+│           Site is live at                                       │
+│           YOUR-USERNAME.github.io/YOUR-REPO-NAME                │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Key Design Decisions
+
+- **Two separate jobs** — `build` and `deploy` are intentionally split. If the Hugo build fails, the deploy job never runs, so your live site is never overwritten with a broken version.
+- **`needs: build`** — creates an explicit dependency between jobs. The deploy job waits for the build job to complete and succeed before starting.
+- **Dynamic `baseURL`** — instead of hardcoding your GitHub Pages URL, the workflow fetches it from the `configure-pages` action at runtime. This makes the workflow portable across different repositories.
+- **Artifact handoff** — the `public/` folder is passed between jobs as an artifact. Jobs run on separate virtual machines, so they can't share a filesystem directly.
+- **Pinned Hugo version** — `HUGO_VERSION: 0.166.0` is set once as an environment variable and reused in the install step. Pinning the version prevents surprise build failures from upstream Hugo updates.
+
+---
+
 ## Section Breakdown
 
 ### 1. Workflow Name
