@@ -278,14 +278,21 @@ This POC is just the beginning. You can extend it:
 
 ## Cost Breakdown
 
-| Component | Cost |
-|-----------|------|
-| Twilio WhatsApp number | $1/month |
-| n8n self-hosted (VPS) | $5/month |
-| Google Drive | Free |
-| **Total** | **~$6/month** |
+Assuming ~100 members checking balance 2–3 times per month (~250 messages/month):
 
-For 100+ members, that's roughly 6¢ per member per month.
+| Component | Cost/Month |
+|-----------|------|
+| Twilio WhatsApp phone number | $1.15 |
+| Twilio WhatsApp messages (250 @ $0.005 each) | $1.25 |
+| n8n self-hosted (VPS) | $5.00 |
+| Google Drive | Free |
+| **Total** | **~$7.40/month** |
+
+**Per-member cost:** ~7¢/member/month for 100 members
+
+**Variable cost per message:** $0.005 (scales with usage)
+
+**Note:** Twilio's WhatsApp sandbox is free for testing. Production requires approval and phone number verification.
 
 ---
 
