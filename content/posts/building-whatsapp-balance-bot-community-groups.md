@@ -23,7 +23,7 @@ I recently built a working proof-of-concept (POC) that does exactly this. Here's
 
 The flow is simple:
 
-1. Member sends: `balance Jane Doe`
+1. Member sends: `balance FirstName`
 2. Bot receives via Twilio WhatsApp API
 3. Bot searches a CSV of members
 4. Bot replies with balance + standing status
@@ -67,16 +67,17 @@ Export or create a CSV with this structure:
 
 ```
 id,name,balance
-1,Jane Njeri,450.0
-2,John Karanja,-120.5
-3,Grace Wambui,280.0
+1,Member One,450.0
+2,Member Two,-120.5
+3,Member Three,280.0
 ...
 ```
 
-Upload it to **Google Drive**. Note the file ID from the URL.
+Upload it to **Google Drive**. Note the file ID from the URL:
 
-Example URL: `https://drive.google.com/file/d/1uWHA_pOPN83Sl5Ds6wG87684e5-HkrA9/`
-File ID: `1uWHA_pOPN83Sl5Ds6wG87684e5-HkrA9`
+Example URL: `https://drive.google.com/file/d/YOUR_FILE_ID_HERE/`
+
+Replace `YOUR_FILE_ID_HERE` with your actual file ID (found in the URL of your shared CSV).
 
 ---
 
@@ -132,7 +133,7 @@ Store the extracted values:
 
 ### 6. **Download CSV from Google Drive** (Google Drive Node)
 - Operation: Download
-- File ID: Paste your member CSV file ID
+- File ID: Paste your member CSV file ID (from Step 2)
 - Format: Auto-detect
 
 ### 7. **Parse CSV** (Extract from File)
@@ -165,7 +166,7 @@ if (!BALANCE_RE.test(rawText)) {
   return [{
     json: {
       senderPhone, messageSid,
-      replyMessage: 'Hi! Send: *balance [your name]*\nExample: balance Jane Njeri'
+      replyMessage: 'Hi! Send: *balance [your name]*\nExample: balance John'
     }
   }];
 }
@@ -179,7 +180,7 @@ if (!nameQuery) {
   return [{
     json: {
       senderPhone, messageSid,
-      replyMessage: 'Please include your name.\nExample: *balance Jane Njeri*'
+      replyMessage: 'Please include your name.\nExample: *balance John*'
     }
   }];
 }
@@ -226,10 +227,10 @@ return [{
 - **Method:** POST
 - **URL:** `https://api.twilio.com/2010-04-01/Accounts/{ACCOUNT_SID}/Messages`
 - **Authentication:** HTTP Basic Auth
-  - Username: `{ACCOUNT_SID}`
-  - Password: `{AUTH_TOKEN}`
+  - Username: `{ACCOUNT_SID}` (from Step 1)
+  - Password: `{AUTH_TOKEN}` (from Step 1)
 - **Body (form-urlencoded):**
-  - `From`: `whatsapp:+1415238886` (your Twilio number)
+  - `From`: `whatsapp:{YOUR_TWILIO_NUMBER}` (your Twilio number from Step 1)
   - `To`: `{{ $json.senderPhone }}`
   - `Body`: `{{ $json.replyMessage }}`
 
@@ -250,13 +251,13 @@ return [{
 Send a WhatsApp message to your Twilio number:
 
 ```
-balance Jane Njeri
+balance John
 ```
 
 You should receive:
 
 ```
-👤 Jane Njeri
+👤 John
 💰 Balance: $450.00
 📋 Status: ✅ Good Standing
 ```
